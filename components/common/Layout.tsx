@@ -37,7 +37,7 @@ const Layout = ({ children }: LayoutProps) => {
   }, [matchesList, matchesInfo, teamsList, teamsInfo]);
 
   return (
-    <main className="flex h-screen w-screen bg-base-300">
+    <main className="flex min-h-screen min-w-full bg-base-300">
       <Navbar />
       {children}
     </main>
