@@ -8,8 +8,13 @@ describe("getTeamsInfo", () => {
     expect(teamsInfo).toEqual({});
   });
 
+  test("should return an empty object for a null array of matches", () => {
+    const teamsInfo = getTeamsInfo(null as any);
+    expect(teamsInfo).toEqual({});
+  });
+
   test("should return the correct team info for a single match", () => {
-    const matchesList = [
+    const matchesList: MatchList = [
       {
         homeTeam: {
           name: "Team A",
@@ -50,7 +55,7 @@ describe("getTeamsInfo", () => {
   });
 
   test("should return the correct team info for multiple matches", () => {
-    const matchesList = [
+    const matchesList: MatchList = [
       {
         homeTeam: {
           name: "A",

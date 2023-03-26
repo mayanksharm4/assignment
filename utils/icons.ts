@@ -1,6 +1,7 @@
 type Icons = {
   [key: string]: string;
 };
+
 export const icons: Icons = {
   "Manchester United":
     "https://img.icons8.com/color/144/null/manchester-united-fc.png",

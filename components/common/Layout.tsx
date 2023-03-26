@@ -1,11 +1,9 @@
-import { getTeamsInfo } from "@/utils/getTeamsInfo";
 import { getMatchesInfo } from "@/utils/getMatchesInfo";
 import { data } from "@/utils/data";
 import { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import React from "react";
 import Navbar from "./Navbar";
-import { getTeamsList } from "@/utils/getTeamsList";
 import {
   matchesInfoAtom,
   matchesListAtom,
@@ -14,6 +12,8 @@ import {
 } from "@/atoms/matchesAtom";
 import { getMatchesList } from "@/utils/getMatchesList";
 import { themeAtom } from "@/atoms/themeAtom";
+import { getTeamsInfo } from "@/utils/getTeamsInfo";
+import { getTeamsList } from "@/utils/getTeamsList";
 
 type LayoutProps = {
   children: React.ReactNode;

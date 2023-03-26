@@ -1,3 +1,4 @@
+import { ERRORS } from "@/constants/errors";
 import { Data } from "@/utils/data";
 import { getMatchesList, MatchList } from "@/utils/getMatchesList";
 
@@ -60,5 +61,28 @@ describe("getMatchesList", () => {
       },
     ];
     expect(result).toEqual(expected);
+  });
+
+  it("returns error when passed an array with an invalid score", () => {
+    const data: Data[] = [
+      {
+        score: { teamA: -1, teamB: 2 },
+        date: "2021-01-01T11:00:00",
+      },
+      {
+        score: { teamC: 3, teamD: 4 },
+        date: "2021-01-02T11:00:00",
+      },
+      {
+        score: { teamE: 5, teamF: -6 },
+        date: "2021-01-03T11:00:00",
+      },
+    ];
+
+    try {
+      getMatchesList(data);
+    } catch (e: any) {
+      expect(e.message).toEqual(ERRORS.INVALID_SCORE);
+    }
   });
 });
