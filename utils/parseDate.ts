@@ -1,5 +1,5 @@
 export const parseDate = (dateString: string) => {
-  if (!dateString) return null;
+  if (!dateString) return "";
 
   const date = new Date(dateString);
 

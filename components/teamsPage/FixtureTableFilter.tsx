@@ -20,7 +20,6 @@ const FixtureTableFilter = ({
   fixtureData,
 }: FixtureTableRowProps) => {
   const parsedDate = parseDate(date);
-  const parsedCurrentDate = parseDate(CURRENT_DATE);
 
   const dateObject = new Date(date);
   const currentDateObject = new Date(CURRENT_DATE);

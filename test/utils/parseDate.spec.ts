@@ -10,6 +10,6 @@ describe("parseDate", () => {
   it("should return null if passed an empty string", () => {
     const dateString = "";
     const formattedDate = parseDate(dateString);
-    expect(formattedDate).toEqual(null);
+    expect(formattedDate).toEqual("");
   });
 });
