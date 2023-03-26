@@ -18,8 +18,10 @@ export default function Home() {
         />
       </Head>
 
-      <div className="container mx-auto my-auto flex flex-col justify-center gap-10 md:p-10">
-        <h1 className="text-center font-bold lg:text-8xl">League Table</h1>
+      <div className="mx-auto my-auto flex w-full flex-col gap-10 py-10 md:p-10 lg:max-w-7xl">
+        <h1 className="mt-10 text-center text-4xl font-bold lg:text-8xl">
+          League Table
+        </h1>
         <LeagueTable teamsList={teamsList} />
       </div>
     </>
