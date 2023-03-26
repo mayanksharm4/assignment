@@ -2,10 +2,12 @@ import LeagueTable from "@/components/LeagueTable";
 import Layout from "@/components/Layout";
 import { data } from "@/utils/data";
 import Head from "next/head";
-import { useState } from "react";
+import { getMatchesInfo } from "@/utils/getMatchesInfo";
+import { getTeamsInfo } from "@/utils/getTeamsInfo";
 
 export default function Home() {
-  const [fetchedData, setFetchedData] = useState<typeof data>([]);
+  const matches = getMatchesInfo(data);
+  const teams = getTeamsInfo(matches);
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="container mx-auto my-auto">
-          <LeagueTable />
+          <LeagueTable teamsList={teams} />
         </div>
       </Layout>
     </>

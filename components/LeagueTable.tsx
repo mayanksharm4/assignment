@@ -1,21 +1,19 @@
 import type { FormattedMatchInfo } from "@/utils/getMatchesInfo";
 import { getMatchesInfo } from "@/utils/getMatchesInfo";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { data, MatchInfo } from "@/utils/data";
-import { getTeamsInfo } from "@/utils/getTeamsInfo";
+import { getTeamsInfo, Teams } from "@/utils/getTeamsInfo";
+import { icons } from "@/utils/icons";
 
-const LeagueTable = () => {
-  const [fetchedData, setFetchedData] = useState<MatchInfo[]>([]);
-  const [matchesInfo, setMatchesInfo] = useState<FormattedMatchInfo[]>([]);
+type LeagueTableProps = {
+  teamsList: Teams;
+};
 
-  useEffect(() => {
-    setFetchedData(data);
-    setMatchesInfo(getMatchesInfo(data));
-    getTeamsInfo(getMatchesInfo(data));
-  }, []);
+const LeagueTable = ({ teamsList }: LeagueTableProps) => {
+  console.log("🚀 => file: LeagueTable.tsx:12 => teamsInfo:", teamsList);
 
   return (
-    <div>
+    <div className="mx-3">
       <div className="w-full overflow-x-auto">
         <table className="table w-full">
           {/* <!-- head --> */}
@@ -31,17 +29,35 @@ const LeagueTable = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              <tr>
-                <td className="text-left">Team 1</td>
-                <td className="text-center">5</td>
-                <td className="text-center">2</td>
-                <td className="text-center">1</td>
-                <td className="text-center">10</td>
-                <td className="text-center">16</td>
-                <td className="text-right">8</td>
-              </tr>
-            }
+            {teamsList.map((team) => {
+              return (
+                <tr className="hover cursor-pointer">
+                  <td className="sticky left-0 text-left">
+                    <div className="flex items-center space-x-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={icons[team.name]}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{team.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="text-center">{team.wins}</td>
+                  <td className="text-center">{team.losses}</td>
+                  <td className="text-center">{team.draws}</td>
+                  <td className="text-center">
+                    {team.goalScore.total - team.goalScore.conceded}
+                  </td>
+                  <td className="text-center">{team.goalScore.total}</td>
+                  <td className="text-right">{team.totalGames}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
