@@ -9,16 +9,19 @@ type LeagueTableProps = {
 
 const LeagueTable = ({ teamsList }: LeagueTableProps) => {
   const router = useRouter();
-  console.log("🚀 => file: LeagueTable.tsx:12 => teamsInfo:", teamsList);
 
   return (
     <div className="mx-3">
       <div className="w-full overflow-x-auto">
         <table className="table w-full">
-          {/* <!-- head --> */}
           <thead>
             <tr>
-              <th className="text-left">Name</th>
+              {/* MOBILE NAME HEADER */}
+              <td className="text-left sm:hidden">Name</td>
+              {/* DESKTOP NAME HEADER */}
+              <th className="hidden text-left sm:sticky sm:left-0 sm:block">
+                Name
+              </th>
               <th className="text-center">Wins</th>
               <th className="text-center">Losses</th>
               <th className="text-center">Draws</th>
@@ -38,7 +41,7 @@ const LeagueTable = ({ teamsList }: LeagueTableProps) => {
                   }}
                 >
                   {/* NAME */}
-                  <td className="sticky left-0 text-left">
+                  <td className="text-left sm:sticky sm:left-0">
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
