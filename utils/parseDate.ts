@@ -1,13 +1,11 @@
+import { format, parseISO } from "date-fns";
+
 export const parseDate = (dateString: string) => {
   if (!dateString) return "";
 
-  const date = new Date(dateString);
+  const parsedDate = parseISO(dateString);
 
-  const formattedDate = `${date.getDate()}/${
-    date.getMonth() + 1
-  }, ${date.getHours()}:${
-    date.getMinutes() < 10 ? "0" : ""
-  }${date.getMinutes()}`;
+  const formattedDate = format(parsedDate, "dd/MM, HH:mm");
 
   return formattedDate;
 };
