@@ -1,4 +1,11 @@
-export const data = [
+export type MatchInfo = {
+  score: {
+    [key: string]: number | null;
+  };
+  date: string;
+};
+
+export const data: MatchInfo[] = [
   {
     score: {
       "Manchester United": 1,
