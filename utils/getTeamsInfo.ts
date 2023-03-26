@@ -1,41 +1,30 @@
-import { FormattedMatchInfo } from "./getMatchesInfo";
-import { MatchInfo } from "./data";
+import { MatchList } from "./getMatchesList";
 
-type Info = {
-  wins: number;
-  losses: number;
-  draws: number;
-  goalScore: {
-    total: number;
-    conceded: number;
+export type TeamInfo = {
+  [teamName: string]: {
+    wins: number;
+    losses: number;
+    draws: number;
+    goalScore: {
+      total: number;
+      conceded: number;
+    };
+    totalGames: number;
+    points: number;
   };
-  totalGames: number;
 };
 
-type TeamInfo = {
-  [teamName: string]: Info;
-};
-
-export type Teams = ({ name: string } & Info)[];
-
-export const getTeamsInfo = (matchesInfo: FormattedMatchInfo[]) => {
+/**
+ * Get the TeamInfo object with wins, losses, draws, goal score and total games
+ * @param matchesList The array MatchInfo object with date, home and away team details
+ * @returns The teams info object with wins, losses, draws, goal score and total games
+ */
+export const getTeamsInfo = (matchesList: MatchList) => {
   const teamsInfo: TeamInfo = {};
 
-  if (matchesInfo) {
-    matchesInfo.forEach((match) => {
+  if (matchesList) {
+    matchesList.forEach((match) => {
       const { homeTeam, awayTeam } = match;
-      console.log("🚀 => file: getTeamsInfo.ts:63 => match:", match);
-
-      const defaultTeamInfo = {
-        wins: 0,
-        losses: 0,
-        draws: 0,
-        goalScore: {
-          total: 0,
-          conceded: 0,
-        },
-        totalGames: 0,
-      };
 
       if (!(homeTeam.name in teamsInfo)) {
         teamsInfo[homeTeam.name] = {
@@ -47,8 +36,10 @@ export const getTeamsInfo = (matchesInfo: FormattedMatchInfo[]) => {
             conceded: 0,
           },
           totalGames: 0,
+          points: 0,
         };
       }
+
       if (!(awayTeam.name in teamsInfo)) {
         teamsInfo[awayTeam.name] = {
           wins: 0,
@@ -59,6 +50,7 @@ export const getTeamsInfo = (matchesInfo: FormattedMatchInfo[]) => {
             conceded: 0,
           },
           totalGames: 0,
+          points: 0,
         };
       }
 
@@ -73,27 +65,22 @@ export const getTeamsInfo = (matchesInfo: FormattedMatchInfo[]) => {
       if (homeTeam.score !== null && awayTeam.score !== null) {
         if (homeTeam.score > awayTeam.score) {
           teamsInfo[homeTeam.name].wins++;
+          teamsInfo[homeTeam.name].points += 3;
           teamsInfo[awayTeam.name].losses++;
         } else if (homeTeam.score < awayTeam.score) {
-          teamsInfo[homeTeam.name].losses++;
           teamsInfo[awayTeam.name].wins++;
+          teamsInfo[awayTeam.name].points += 3;
+          teamsInfo[homeTeam.name].losses++;
         } else {
           teamsInfo[homeTeam.name].draws++;
+          teamsInfo[homeTeam.name].points++;
+
           teamsInfo[awayTeam.name].draws++;
+          teamsInfo[awayTeam.name].points++;
         }
       }
     });
   }
 
-  // Convert teamsInfo to array
-  const teams: Teams = Object.entries(teamsInfo).map(
-    ({ "0": name, "1": info }) => {
-      return {
-        name,
-        ...info,
-      };
-    }
-  );
-
-  return teams;
+  return teamsInfo;
 };

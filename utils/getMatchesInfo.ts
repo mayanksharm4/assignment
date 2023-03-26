@@ -1,36 +1,36 @@
-import type { MatchInfo } from "./data";
+import { MatchList } from "./getMatchesList";
 
-export type FormattedMatchInfo = {
-  homeTeam: {
-    name: string;
-    score: number | null;
+export type MatchInfo = {
+  [date: string]: {
+    homeTeam: {
+      name: string;
+      score: number | null;
+    };
+    awayTeam: {
+      name: string;
+      score: number | null;
+    };
   };
-  awayTeam: {
-    name: string;
-    score: number | null;
-  };
-  date: string;
 };
 
-export const getMatchesInfo = (data: MatchInfo[]): FormattedMatchInfo[] => {
-  let matchesInfo: FormattedMatchInfo[] = [];
+export const getMatchesInfo = (matchesList: MatchList) => {
+  let matchesInfo: MatchInfo = {};
 
-  matchesInfo = data.map((match) => {
-    const { score, date } = match;
-    const [homeTeam, awayTeam] = Object.keys(score);
-    const homeTeamScore = score[homeTeam];
-    const awayTeamScore = score[awayTeam];
+  matchesList.forEach((match) => {
+    const { homeTeam, awayTeam, date } = match;
 
-    return {
+    const { name: homeTeamName, score: homeTeamScore } = homeTeam;
+    const { name: awayTeamName, score: awayTeamScore } = awayTeam;
+
+    matchesInfo[date] = {
       homeTeam: {
-        name: homeTeam,
+        name: homeTeamName,
         score: homeTeamScore,
       },
       awayTeam: {
-        name: awayTeam,
+        name: awayTeamName,
         score: awayTeamScore,
       },
-      date,
     };
   });
 

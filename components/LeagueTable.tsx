@@ -1,15 +1,14 @@
-import type { FormattedMatchInfo } from "@/utils/getMatchesInfo";
-import { getMatchesInfo } from "@/utils/getMatchesInfo";
-import React, { useCallback, useEffect, useState } from "react";
-import { data, MatchInfo } from "@/utils/data";
-import { getTeamsInfo, Teams } from "@/utils/getTeamsInfo";
+import { useRouter } from "next/router";
 import { icons } from "@/utils/icons";
+import React from "react";
+import { TeamList } from "@/utils/getTeamsList";
 
 type LeagueTableProps = {
-  teamsList: Teams;
+  teamsList: TeamList;
 };
 
 const LeagueTable = ({ teamsList }: LeagueTableProps) => {
+  const router = useRouter();
   console.log("🚀 => file: LeagueTable.tsx:12 => teamsInfo:", teamsList);
 
   return (
@@ -31,7 +30,14 @@ const LeagueTable = ({ teamsList }: LeagueTableProps) => {
           <tbody>
             {teamsList.map((team) => {
               return (
-                <tr className="hover cursor-pointer">
+                <tr
+                  key={team.name}
+                  className="hover cursor-pointer"
+                  onClick={() => {
+                    router.push("/team/" + team.name);
+                  }}
+                >
+                  {/* NAME */}
                   <td className="sticky left-0 text-left">
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
@@ -47,13 +53,19 @@ const LeagueTable = ({ teamsList }: LeagueTableProps) => {
                       </div>
                     </div>
                   </td>
+                  {/* WINS */}
                   <td className="text-center">{team.wins}</td>
+                  {/* LOSSES */}
                   <td className="text-center">{team.losses}</td>
+                  {/* DRAWS */}
                   <td className="text-center">{team.draws}</td>
+                  {/* GOAL DIFFERENCES */}
                   <td className="text-center">
                     {team.goalScore.total - team.goalScore.conceded}
                   </td>
-                  <td className="text-center">{team.goalScore.total}</td>
+                  {/* POINTS */}
+                  <td className="text-center">{team.points}</td>
+                  {/* GAMES PLAYED */}
                   <td className="text-right">{team.totalGames}</td>
                 </tr>
               );

@@ -1,13 +1,10 @@
+import { teamsInfoAtom, teamsListAtom } from "@/atoms/matchesAtom";
 import LeagueTable from "@/components/LeagueTable";
-import Layout from "@/components/Layout";
-import { data } from "@/utils/data";
+import { useAtomValue } from "jotai";
 import Head from "next/head";
-import { getMatchesInfo } from "@/utils/getMatchesInfo";
-import { getTeamsInfo } from "@/utils/getTeamsInfo";
 
 export default function Home() {
-  const matches = getMatchesInfo(data);
-  const teams = getTeamsInfo(matches);
+  const teamsList = useAtomValue(teamsListAtom);
 
   return (
     <>
@@ -20,11 +17,9 @@ export default function Home() {
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>"
         />
       </Head>
-      <Layout>
-        <div className="container mx-auto my-auto">
-          <LeagueTable teamsList={teams} />
-        </div>
-      </Layout>
+      <div className="container mx-auto my-auto">
+        <LeagueTable teamsList={teamsList} />
+      </div>
     </>
   );
 }
